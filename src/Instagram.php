@@ -548,25 +548,25 @@ class Instagram
      */
     public function pagination($obj, $limit = 0)
     {
-        if (is_object($obj) && !is_null($obj->pagination)) {
-            if (!isset($obj->pagination->next_url)) {
+        if (isset($obj['pagination'])) {
+            if (!isset($obj['pagination']['next_url'])) {
                 return;
             }
 
-            $apiCall = explode('?', $obj->pagination->next_url);
+            $apiCall = explode('?', $obj['pagination']['next_url']);
 
             if (count($apiCall) < 2) {
                 return;
             }
 
             $function = str_replace(self::API_URL, '', $apiCall[0]);
-            $count = ($limit) ? $limit : count($obj->data);
+            $count = ($limit) ? $limit : count($obj['data']);
 
-            if (isset($obj->pagination->next_max_tag_id)) {
-                return $this->_makeCall($function, array('max_tag_id' => $obj->pagination->next_max_tag_id, 'count' => $count));
+            if (isset($obj['pagination']['next_max_tag_id'])) {
+                return $this->_makeCall($function, array('max_tag_id' => $obj['pagination']['next_max_tag_id'], 'count' => $count));
             }
 
-            return $this->_makeCall($function, array('next_max_id' => $obj->pagination->next_max_id, 'count' => $count));
+            return $this->_makeCall($function, array('next_max_id' => $obj['pagination']['next_max_id'], 'count' => $count));
         }
         throw new InstagramException("Error: pagination() | This method doesn't support pagination.");
     }
@@ -666,7 +666,7 @@ class Instagram
 
         curl_close($ch);
 
-        return json_decode($jsonData);
+        return json_decode($jsonData, true);
     }
 
     /**
