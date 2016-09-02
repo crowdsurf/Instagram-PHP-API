@@ -79,7 +79,7 @@ class Instagram
      * @var string[]
      */
     private $_actions = array('follow', 'unfollow', 'approve', 'ignore');
-    
+
     /**
      * Rate limit.
      *
@@ -286,7 +286,7 @@ class Instagram
     {
         return $this->_makeCall('users/' . $id . '/relationship');
     }
-    
+
     /**
      * Get the value of X-RateLimit-Remaining header field.
      *
@@ -654,7 +654,7 @@ class Instagram
 
         // convert header content into an array
         $headers = $this->processHeaders($headerContent);
-        
+
         // get the 'X-Ratelimit-Remaining' header value
         if (isset($headers['X-Ratelimit-Remaining'])) {
             $this->_xRateLimitRemaining = trim($headers['X-Ratelimit-Remaining']);
