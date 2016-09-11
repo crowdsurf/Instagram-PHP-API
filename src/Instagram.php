@@ -543,8 +543,7 @@ class Instagram
      * @param int $limit Limit of returned results
      *
      * @return mixed
-     *
-     * @throws \MetzWeb\Instagram\InstagramException
+     * edited to return null if method does not support pagination
      */
     public function pagination($obj, $limit = 0)
     {
@@ -568,7 +567,7 @@ class Instagram
 
             return $this->_makeCall($function, array('next_max_id' => $obj['pagination']['next_max_id'], 'count' => $count));
         }
-        throw new InstagramException("Error: pagination() | This method doesn't support pagination.");
+        return;
     }
 
     /**
